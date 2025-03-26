@@ -16,10 +16,10 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.example.playstyles"
+			"com.ericpandev.playstyles"
 		],
 		"client": [
-			"com.example.playstylesClient"
+			"com.ericpandev.playstylesClient"
 		]
 	},
 	"mixins": [
