@@ -1,7 +1,6 @@
 package com.ericpandev.commands;
 
 import com.mojang.brigadier.Command;
-// import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -9,6 +8,10 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.text.Text;
 import net.minecraft.server.network.ServerPlayerEntity;
+// import net.minecraft.server.world.ServerWorld;
+// import net.minecraft.entity.Entity;
+import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.world.World;
 import com.ericpandev.playstyle.PlaystyleManager;
 
 public class PlaystyleCommand {
@@ -52,6 +55,25 @@ public class PlaystyleCommand {
                 return Command.SINGLE_SUCCESS;
         }
 
+        // Force mobs to recheck their targets based on the new playstyle
+        recheckMobsAI(player);
+
         return Command.SINGLE_SUCCESS;
     }
+
+    private static void recheckMobsAI(ServerPlayerEntity player) {
+        World world = player.getWorld(); // Get the world from the player
+    
+        // Get all mob entities within a certain range of the player
+        world.getEntitiesByClass(MobEntity.class, player.getBoundingBox().expand(100), entity -> true).forEach(mob -> {
+            // Reset the mob's target if it is currently targeting the player
+            if (mob.getTarget() == player) {
+                mob.setTarget(null);  // Reset the target
+    
+                // Trigger the mob's tick() method directly to recheck its AI
+                mob.tick();  // This forces the mob to update its state and AI behavior
+            }
+        });
+    }
+
 }
