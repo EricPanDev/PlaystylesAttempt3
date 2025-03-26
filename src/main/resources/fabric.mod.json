@@ -1,31 +1,31 @@
 {
 	"schemaVersion": 1,
-	"id": "modid",
+	"id": "playstyles",
 	"version": "${version}",
-	"name": "Example mod",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"name": "Playstyles",
+	"description": "A mod that allows players to choose personalized playstyles.",
 	"authors": [
-		"Me!"
+		"ericpandev"
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
 		"sources": "https://github.com/FabricMC/fabric-example-mod"
 	},
 	"license": "CC0-1.0",
-	"icon": "assets/modid/icon.png",
+	"icon": "assets/playstyles/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.example.ExampleMod"
+			"com.example.playstyles"
 		],
 		"client": [
-			"com.example.ExampleModClient"
+			"com.example.playstylesClient"
 		]
 	},
 	"mixins": [
-		"modid.mixins.json",
+		"playstyles.mixins.json",
 		{
-			"config": "modid.client.mixins.json",
+			"config": "playstyles.client.mixins.json",
 			"environment": "client"
 		}
 	],
