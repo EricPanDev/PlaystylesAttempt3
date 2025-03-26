@@ -3,7 +3,8 @@
 	"package": "com.ericpandev.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-		"MobEntityMixin"
+		"MobEntityMixin",
+		"ServerPlayerEntityMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
