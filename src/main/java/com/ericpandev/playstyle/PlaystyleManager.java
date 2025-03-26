@@ -16,4 +16,8 @@ public class PlaystyleManager {
         String style = playerPlaystyles.get(player);
         return style != null && style.equalsIgnoreCase("peaceful");
     }
+    public static boolean isDifficult(ServerPlayerEntity player) {
+        String style = playerPlaystyles.get(player);
+        return style != null && style.equalsIgnoreCase("difficult");
+    }
 }
