@@ -3,7 +3,7 @@
 	"package": "com.ericpandev.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-		"ExampleMixin"
+		"MobEntityMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

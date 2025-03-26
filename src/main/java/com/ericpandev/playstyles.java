@@ -15,7 +15,7 @@ public class playstyles implements ModInitializer {
     @Override
     public void onInitialize() {
         // This code runs as soon as Minecraft is in a mod-load-ready state.
-        LOGGER.info("Hello Fabric world!");
+        LOGGER.info("Playstyles mod by @ericpandev for YSWS Minecraft hosted by Hack Club");
 
         // Register the PlaystyleCommand
         PlaystyleCommand.register();

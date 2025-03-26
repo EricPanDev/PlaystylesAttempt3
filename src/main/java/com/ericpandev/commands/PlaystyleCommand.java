@@ -1,13 +1,15 @@
 package com.ericpandev.commands;
 
 import com.mojang.brigadier.Command;
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+// import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.text.Text;
+import net.minecraft.server.network.ServerPlayerEntity;
+import com.ericpandev.playstyle.PlaystyleManager;
 
 public class PlaystyleCommand {
 
@@ -19,7 +21,6 @@ public class PlaystyleCommand {
                         .suggests((context, builder) -> {
                             builder.suggest("difficult");
                             builder.suggest("peaceful");
-                            // Add more styles here
                             return builder.buildFuture();
                         })
                         .executes(context -> executePlaystyleCommand(context, StringArgumentType.getString(context, "style")))
@@ -30,18 +31,23 @@ public class PlaystyleCommand {
 
     private static int executePlaystyleCommand(CommandContext<ServerCommandSource> context, String style) {
         ServerCommandSource source = context.getSource();
+        ServerPlayerEntity player = source.getPlayer();
+
+        if (player == null) {
+            source.sendError(Text.literal("Only a player can set a playstyle!"));
+            return Command.SINGLE_SUCCESS;
+        }
 
         switch (style.toLowerCase()) {
             case "difficult":
-                // Send feedback for 'difficult'
+                PlaystyleManager.setPlaystyle(player, "difficult");
                 source.sendFeedback(() -> Text.literal("Playstyle set to difficult!"), false);
                 break;
             case "peaceful":
-                // Send feedback for 'peaceful'
+                PlaystyleManager.setPlaystyle(player, "peaceful");
                 source.sendFeedback(() -> Text.literal("Playstyle set to peaceful!"), false);
                 break;
             default:
-                // Send error message for an invalid playstyle
                 source.sendError(Text.literal("Invalid playstyle!"));
                 return Command.SINGLE_SUCCESS;
         }
