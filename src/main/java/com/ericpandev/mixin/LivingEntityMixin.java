@@ -1,10 +1,8 @@
 package com.ericpandev.mixin;
 
 import com.ericpandev.playstyle.InventoryManager;
-// import com.ericpandev.playstyle.ExperienceManager;
 import com.ericpandev.playstyle.PlaystyleManager;
 import net.minecraft.entity.LivingEntity;
-// import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -38,7 +36,6 @@ public class LivingEntityMixin {
         if (((Object) this) instanceof ServerPlayerEntity) {
             ServerPlayerEntity self = (ServerPlayerEntity) (Object) this;
             if (PlaystyleManager.isRetain(self)) {
-                System.out.println("CANCELLED EXPERIENCE DROP");
                 ci.cancel();
             }
         }
@@ -53,7 +50,6 @@ public class LivingEntityMixin {
         if (((Object) this) instanceof ServerPlayerEntity) {
             ServerPlayerEntity self = (ServerPlayerEntity) (Object) this;
             if (PlaystyleManager.isPeaceful(self) || PlaystyleManager.isRetain(self)) {
-                System.out.println("CANCELLED SHOULD DROP EXPERIENCE");
                 cir.setReturnValue(false);
             }
         }
