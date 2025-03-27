@@ -26,15 +26,27 @@ public class PlayerEntityMixin {
     @Inject(method = "attack", at = @At("HEAD"), cancellable = true)
     private void preventDamage(Entity target, CallbackInfo ci) {
         PlayerEntity self = (PlayerEntity) (Object) this;
-        if (target instanceof LivingEntity && PlaystyleManager.isPeaceful(self)) {
-            if (self instanceof ServerPlayerEntity serverPlayer) {
-                int currentTick = serverPlayer.getServer().getTicks();
-                if (currentTick - lastMessageTick > 100) { // Adjust 100 ticks as needed (5 seconds at 20 TPS)
-                    serverPlayer.sendMessage(Text.literal("You are playing using the peaceful playstyle! You cannot attack other entities."), false);
-                    lastMessageTick = currentTick;
+    
+        if (target instanceof LivingEntity) {
+            if (PlaystyleManager.isPeaceful(self)) {
+                if (self instanceof ServerPlayerEntity serverPlayer) {
+                    int currentTick = serverPlayer.getServer().getTicks();
+                    if (currentTick - lastMessageTick > 100) { 
+                        serverPlayer.sendMessage(Text.literal("You are playing using the peaceful playstyle! You cannot attack other entities."), false);
+                        lastMessageTick = currentTick;
+                    }
                 }
+                ci.cancel();
+            } else if (target instanceof PlayerEntity targetPlayer && PlaystyleManager.isPeaceful(targetPlayer)) {
+                if (self instanceof ServerPlayerEntity serverPlayer) {
+                    int currentTick = serverPlayer.getServer().getTicks();
+                    if (currentTick - lastMessageTick > 100) { 
+                        serverPlayer.sendMessage(Text.literal("You cannot attack this player!"), false);
+                        lastMessageTick = currentTick;
+                    }
+                }
+                ci.cancel();
             }
-            ci.cancel();
         }
     }
 }
