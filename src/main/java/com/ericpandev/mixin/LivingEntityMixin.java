@@ -1,5 +1,6 @@
 package com.ericpandev.mixin;
 
+import com.ericpandev.playstyle.InventoryManager;
 // import com.ericpandev.playstyle.ExperienceManager;
 import com.ericpandev.playstyle.PlaystyleManager;
 import net.minecraft.entity.LivingEntity;
@@ -21,8 +22,9 @@ public class LivingEntityMixin {
     private void onDropInventory(CallbackInfo ci) {
         if (((Object) this) instanceof ServerPlayerEntity) {
             ServerPlayerEntity self = (ServerPlayerEntity) (Object) this;
-            if (PlaystyleManager.isPeaceful(self) || PlaystyleManager.isRetain(self)) {
+            if (PlaystyleManager.isRetain(self)) {
                 System.out.println("CANCELLED INVENTORY DROP");
+                InventoryManager.storeInventory(self.getUuid(), self.getInventory());
                 ci.cancel();
             }
         }
@@ -35,7 +37,7 @@ public class LivingEntityMixin {
     private void onDropExperience(CallbackInfo ci) {
         if (((Object) this) instanceof ServerPlayerEntity) {
             ServerPlayerEntity self = (ServerPlayerEntity) (Object) this;
-            if (PlaystyleManager.isPeaceful(self) || PlaystyleManager.isRetain(self)) {
+            if (PlaystyleManager.isRetain(self)) {
                 System.out.println("CANCELLED EXPERIENCE DROP");
                 ci.cancel();
             }

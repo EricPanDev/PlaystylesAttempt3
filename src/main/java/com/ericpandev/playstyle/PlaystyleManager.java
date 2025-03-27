@@ -1,27 +1,33 @@
 package com.ericpandev.playstyle;
 
-import net.minecraft.server.network.ServerPlayerEntity;
-
+import net.minecraft.entity.player.PlayerEntity;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class PlaystyleManager {
-    private static final Map<ServerPlayerEntity, String> playerPlaystyles = new ConcurrentHashMap<>();
+    private static final Map<UUID, String> playerPlaystyles = new ConcurrentHashMap<>();
 
-    public static void setPlaystyle(ServerPlayerEntity player, String playstyle) {
-        playerPlaystyles.put(player, playstyle);
+    public static void setPlaystyle(PlayerEntity player, String playstyle) {
+        playerPlaystyles.put(player.getUuid(), playstyle);
     }
 
-    public static boolean isPeaceful(ServerPlayerEntity player) {
-        String style = playerPlaystyles.get(player);
+    public static String getPlaystyle(PlayerEntity player) {
+        return playerPlaystyles.getOrDefault(player.getUuid(), "normal");
+    }
+
+    public static boolean isPeaceful(PlayerEntity player) {
+        String style = playerPlaystyles.get(player.getUuid());
         return style != null && style.equalsIgnoreCase("peaceful");
     }
-    public static boolean isDifficult(ServerPlayerEntity player) {
-        String style = playerPlaystyles.get(player);
+
+    public static boolean isDifficult(PlayerEntity player) {
+        String style = playerPlaystyles.get(player.getUuid());
         return style != null && style.equalsIgnoreCase("difficult");
     }
-    public static boolean isRetain(ServerPlayerEntity player) {
-        String style = playerPlaystyles.get(player);
+
+    public static boolean isRetain(PlayerEntity player) {
+        String style = playerPlaystyles.get(player.getUuid());
         return style != null && style.equalsIgnoreCase("retain");
     }
 }

@@ -15,36 +15,26 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ServerPlayerEntity.class)
 public class ServerPlayerEntityMixin {
 
-    /**
-     * Intercept damage on ServerPlayerEntity and modify damage based on playstyle.
-     */
     @Inject(method = "damage", at = @At("HEAD"), cancellable = true)
     private void onDamage(ServerWorld world, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         ServerPlayerEntity self = (ServerPlayerEntity) (Object) this;
 
-        // If the playstyle is "peaceful", prevent mob damage
         if (PlaystyleManager.isPeaceful(self) && source.getAttacker() instanceof MobEntity) {
-            cir.setReturnValue(false); // Cancel the damage event
+            cir.setReturnValue(false);
             return;
         }
 
-        // If the playstyle is "difficult", apply 1.5x damage
         if (PlaystyleManager.isDifficult(self)) {
-            amount *= 1.5f; // Modify the damage amount to be 1.5x
+            amount *= 1.5f;
         }
-
-        // Allow normal damage to continue with the modified amount
     }
 
     @Inject(method = "onDeath", at = @At("HEAD"))
     private void onDeath(DamageSource source, CallbackInfo ci) {
-
         ServerPlayerEntity self = (ServerPlayerEntity) (Object) this;
 
         if (PlaystyleManager.isRetain(self)) {
-
             ExperienceManager.storeXp(self.getUuid(), self.totalExperience);
-            
         }
     }
 
@@ -52,13 +42,12 @@ public class ServerPlayerEntityMixin {
     private void onCopyFrom(ServerPlayerEntity oldPlayer, boolean alive, CallbackInfo ci) {
         ServerPlayerEntity self = (ServerPlayerEntity) (Object) this;
 
-        int xp = ExperienceManager.retrieveXp(oldPlayer.getUuid());
-        
-        if (PlaystyleManager.isRetain(self)) {
-            self.addExperience(xp);
+        PlaystyleManager.setPlaystyle(self, PlaystyleManager.getPlaystyle(oldPlayer));
 
+        if (PlaystyleManager.isRetain(self)) {
+            int xp = ExperienceManager.retrieveXp(oldPlayer.getUuid());
+            self.addExperience(xp);
             ExperienceManager.clearXp(oldPlayer.getUuid());
         }
     }
 }
-
