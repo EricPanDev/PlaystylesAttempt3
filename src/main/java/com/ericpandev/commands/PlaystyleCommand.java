@@ -24,6 +24,8 @@ public class PlaystyleCommand {
                         .suggests((context, builder) -> {
                             builder.suggest("difficult");
                             builder.suggest("peaceful");
+                            builder.suggest("normal");
+                            builder.suggest("retain");
                             return builder.buildFuture();
                         })
                         .executes(context -> executePlaystyleCommand(context, StringArgumentType.getString(context, "style")))
@@ -49,6 +51,14 @@ public class PlaystyleCommand {
             case "peaceful":
                 PlaystyleManager.setPlaystyle(player, "peaceful");
                 source.sendFeedback(() -> Text.literal("Playstyle set to peaceful!"), false);
+                break;
+            case "normal":
+                PlaystyleManager.setPlaystyle(player, "normal");
+                source.sendFeedback(() -> Text.literal("Playstyle has been reset."), false);
+                break;
+            case "retain":
+                PlaystyleManager.setPlaystyle(player, "retain");
+                source.sendFeedback(() -> Text.literal("Playstyle set to retain!"), false);
                 break;
             default:
                 source.sendError(Text.literal("Invalid playstyle!"));

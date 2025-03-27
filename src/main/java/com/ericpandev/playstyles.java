@@ -6,6 +6,8 @@ import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ericpandev.events.RetainInventoryEventHandler;
+
 public class playstyles implements ModInitializer {
     public static final String MOD_ID = "playstyles";
 
@@ -19,5 +21,6 @@ public class playstyles implements ModInitializer {
 
         // Register the PlaystyleCommand
         PlaystyleCommand.register();
+        RetainInventoryEventHandler.register();
     }
 }
