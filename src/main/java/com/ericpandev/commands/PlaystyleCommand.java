@@ -8,6 +8,8 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.text.Text;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.entity.attribute.EntityAttributeInstance;
+import net.minecraft.entity.attribute.EntityAttributes;
 // import net.minecraft.server.world.ServerWorld;
 // import net.minecraft.entity.Entity;
 import net.minecraft.entity.mob.MobEntity;
@@ -26,6 +28,7 @@ public class PlaystyleCommand {
                             builder.suggest("peaceful");
                             builder.suggest("normal");
                             builder.suggest("retain");
+                            builder.suggest("glass");
                             return builder.buildFuture();
                         })
                         .executes(context -> executePlaystyleCommand(context, StringArgumentType.getString(context, "style")))
@@ -60,9 +63,24 @@ public class PlaystyleCommand {
                 PlaystyleManager.setPlaystyle(player, "retain");
                 source.sendFeedback(() -> Text.literal("Playstyle set to retain!"), false);
                 break;
+            case "glass":
+                PlaystyleManager.setPlaystyle(player, "glass");
+                EntityAttributeInstance healthAttribute = player.getAttributeInstance(EntityAttributes.MAX_HEALTH);
+                if (healthAttribute != null) {
+                    healthAttribute.setBaseValue(2.0);
+                    player.setHealth(2.0f);
+                }
+                source.sendFeedback(() -> Text.literal("Playstyle set to glass!"), false);
+                break;
             default:
                 source.sendError(Text.literal("Invalid playstyle!"));
                 return Command.SINGLE_SUCCESS;
+        }
+        if (!style.equalsIgnoreCase("glass")) {
+            EntityAttributeInstance healthAttribute = player.getAttributeInstance(EntityAttributes.MAX_HEALTH);
+                if (healthAttribute != null) {
+                    healthAttribute.setBaseValue(20.0);
+                }
         }
 
         // Force mobs to recheck their targets based on the new playstyle
