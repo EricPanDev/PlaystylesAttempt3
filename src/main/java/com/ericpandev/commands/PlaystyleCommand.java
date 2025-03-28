@@ -32,6 +32,7 @@ public class PlaystyleCommand {
                             builder.suggest("glass");
                             builder.suggest("berserk");
                             builder.suggest("undead");
+                            builder.suggest("survivalist");
                             return builder.buildFuture();
                         })
                         .executes(context -> executePlaystyleCommand(context, StringArgumentType.getString(context, "style")))
@@ -69,7 +70,9 @@ private static int showAvailablePlaystyles(CommandContext<ServerCommandSource> c
         .append("\n")
         .append(createClickablePlaystyle("Berserk", "berserk", "You deal x2 damage but also receive x2 damage"))
         .append("\n")
-        .append(createClickablePlaystyle("undead", "undead", "Mobs ignore you but you take damage from the sun"));
+        .append(createClickablePlaystyle("Undead", "undead", "Mobs ignore you but you take damage from the sun"))
+        .append("\n")
+        .append(createClickablePlaystyle("Survivalist", "survivalist", "Minecraft without the craft(ing table)"));
 
     // Combine title and list
     Text availablePlaystyles = title.copy().append(playstylesList);
@@ -126,6 +129,10 @@ private static Text createClickablePlaystyle(String name, String style, String d
             case "undead":
                 PlaystyleManager.setPlaystyle(player, "undead");
                 source.sendFeedback(() -> Text.literal("Playstyle set to undead!"), false);
+                break;
+            case "survivalist":
+                PlaystyleManager.setPlaystyle(player, "survivalist");
+                source.sendFeedback(() -> Text.literal("Playstyle set to survivalist!"), false);
                 break;
             case "glass":
                 PlaystyleManager.setPlaystyle(player, "glass");

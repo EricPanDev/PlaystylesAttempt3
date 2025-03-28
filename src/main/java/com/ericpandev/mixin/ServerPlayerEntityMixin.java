@@ -33,6 +33,7 @@ public class ServerPlayerEntityMixin {
         }
     }
 
+    
     @Inject(method = "onDeath", at = @At("HEAD"))
     private void onDeath(DamageSource source, CallbackInfo ci) {
         ServerPlayerEntity self = (ServerPlayerEntity) (Object) this;

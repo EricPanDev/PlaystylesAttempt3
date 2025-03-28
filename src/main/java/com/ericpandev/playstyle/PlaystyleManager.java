@@ -45,4 +45,9 @@ public class PlaystyleManager {
         String style = playerPlaystyles.get(player.getUuid());
         return style != null && style.equalsIgnoreCase("undead");
     }
+
+    public static boolean isSurvivalist(PlayerEntity player) {
+        String style = playerPlaystyles.get(player.getUuid());
+        return style != null && style.equalsIgnoreCase("survivalist");
+    }
 }
