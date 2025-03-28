@@ -29,6 +29,7 @@ public class PlaystyleCommand {
                             builder.suggest("normal");
                             builder.suggest("retain");
                             builder.suggest("glass");
+                            builder.suggest("berserk");
                             return builder.buildFuture();
                         })
                         .executes(context -> executePlaystyleCommand(context, StringArgumentType.getString(context, "style")))
@@ -62,6 +63,10 @@ public class PlaystyleCommand {
             case "retain":
                 PlaystyleManager.setPlaystyle(player, "retain");
                 source.sendFeedback(() -> Text.literal("Playstyle set to retain!"), false);
+                break;
+            case "berserk":
+                PlaystyleManager.setPlaystyle(player, "berserk");
+                source.sendFeedback(() -> Text.literal("Playstyle set to berserk!"), false);
                 break;
             case "glass":
                 PlaystyleManager.setPlaystyle(player, "glass");

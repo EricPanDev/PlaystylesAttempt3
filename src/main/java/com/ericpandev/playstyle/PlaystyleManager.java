@@ -35,4 +35,9 @@ public class PlaystyleManager {
         String style = playerPlaystyles.get(player.getUuid());
         return style != null && style.equalsIgnoreCase("glass");
     }
+
+    public static boolean isBerserk(PlayerEntity player) {
+        String style = playerPlaystyles.get(player.getUuid());
+        return style != null && style.equalsIgnoreCase("berserk");
+    }
 }

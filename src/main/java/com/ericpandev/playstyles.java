@@ -2,6 +2,11 @@ package com.ericpandev;
 
 import com.ericpandev.commands.PlaystyleCommand;  // Import PlaystyleCommand
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
+import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.ActionResult;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

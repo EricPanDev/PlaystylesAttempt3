@@ -27,6 +27,10 @@ public class ServerPlayerEntityMixin {
         if (PlaystyleManager.isDifficult(self)) {
             amount *= 1.5f;
         }
+
+        if (PlaystyleManager.isBerserk(self)) {
+            amount *= 2f;
+        }
     }
 
     @Inject(method = "onDeath", at = @At("HEAD"))
