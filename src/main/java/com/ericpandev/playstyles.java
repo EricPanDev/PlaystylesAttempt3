@@ -59,9 +59,9 @@ public class playstyles implements ModInitializer {
 
     private ActionResult onPlayerUseBlock(PlayerEntity player, World world, Hand hand, BlockHitResult hitResult) {
         BlockPos pos = hitResult.getBlockPos();
-        if (world.getBlockState(pos).getBlock() == Blocks.CRAFTING_TABLE) {
+        if (world.getBlockState(pos).getBlock() == Blocks.CRAFTING_TABLE || world.getBlockState(pos).getBlock() == Blocks.SMOKER || world.getBlockState(pos).getBlock() == Blocks.FURNACE) {
             if (PlaystyleManager.isSurvivalist(player)) {
-                player.sendMessage(Text.literal("You are not allowed to use crafting tables!"), false);
+                player.sendMessage(Text.literal("You are not allowed to use this block!"), false);
                 return ActionResult.FAIL;
             }
         }
