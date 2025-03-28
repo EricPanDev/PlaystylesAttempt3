@@ -67,7 +67,9 @@ private static int showAvailablePlaystyles(CommandContext<ServerCommandSource> c
         .append("\n")
         .append(createClickablePlaystyle("Glass", "glass", "You have 1 heart of health"))
         .append("\n")
-        .append(createClickablePlaystyle("Berserk", "berserk", "You deal x2 damage but also receive x2 damage"));
+        .append(createClickablePlaystyle("Berserk", "berserk", "You deal x2 damage but also receive x2 damage"))
+        .append("\n")
+        .append(createClickablePlaystyle("undead", "undead", "Mobs ignore you but you take damage from the sun"));
 
     // Combine title and list
     Text availablePlaystyles = title.copy().append(playstylesList);

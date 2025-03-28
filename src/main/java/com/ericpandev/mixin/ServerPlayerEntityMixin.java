@@ -19,7 +19,7 @@ public class ServerPlayerEntityMixin {
     private void onDamage(ServerWorld world, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         ServerPlayerEntity self = (ServerPlayerEntity) (Object) this;
 
-        if (PlaystyleManager.isPeaceful(self) && source.getAttacker() instanceof MobEntity) {
+        if ((PlaystyleManager.isPeaceful(self) || PlaystyleManager.isUndead(self)) && source.getAttacker() instanceof MobEntity) {
             cir.setReturnValue(false);
             return;
         }

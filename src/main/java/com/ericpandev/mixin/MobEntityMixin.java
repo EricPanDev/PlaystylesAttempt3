@@ -17,7 +17,7 @@ public class MobEntityMixin {
 
     @Inject(method = "setTarget", at = @At("HEAD"), cancellable = true)
     private void onSetTarget(LivingEntity target, CallbackInfo ci) {
-        if (target instanceof ServerPlayerEntity player && PlaystyleManager.isPeaceful(player)) {
+        if (target instanceof ServerPlayerEntity player && (PlaystyleManager.isPeaceful(player) || PlaystyleManager.isUndead(player))) {
             // Cancel setting the target so mobs do not attack peaceful players.
             ci.cancel();
         }

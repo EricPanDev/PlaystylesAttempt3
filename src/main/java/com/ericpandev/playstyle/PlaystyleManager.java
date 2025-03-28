@@ -40,4 +40,9 @@ public class PlaystyleManager {
         String style = playerPlaystyles.get(player.getUuid());
         return style != null && style.equalsIgnoreCase("berserk");
     }
+
+    public static boolean isUndead(PlayerEntity player) {
+        String style = playerPlaystyles.get(player.getUuid());
+        return style != null && style.equalsIgnoreCase("undead");
+    }
 }
